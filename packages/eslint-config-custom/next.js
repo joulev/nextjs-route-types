@@ -38,6 +38,9 @@ module.exports = {
   // add rules configurations here
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
     "import/no-default-export": "off",
+    "import/order": "off", // handled by Prettier
+    "no-console": "off",
   },
 };

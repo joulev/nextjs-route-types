@@ -1,3 +1,9 @@
 {
-  "editor.rulers": [100]
+  "editor.rulers": [100],
+  "eslint.workingDirectories": [
+    "./apps/web",
+    "./packages/eslint-config-custom",
+    "./packages/nextjs-route-types",
+    "./packages/tsconfig"
+  ]
 }

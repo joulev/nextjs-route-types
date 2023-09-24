@@ -32,5 +32,8 @@ module.exports = {
   ignorePatterns: ["node_modules/", "dist/"],
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "import/order": "off", // handled by Prettier
+    "no-console": "off",
   },
 };

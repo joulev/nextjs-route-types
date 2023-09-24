@@ -5,7 +5,6 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "dev": "next dev",
     "lint": "eslint --ext .ts,.tsx ."
   },
   "dependencies": {
@@ -15,6 +14,7 @@
     "@types/node": "20.6.4",
     "eslint": "8.50.0",
     "eslint-config-custom": "workspace:*",
+    "next": "13.5.2",
     "tsconfig": "workspace:*",
     "typescript": "5.2.2"
   }
