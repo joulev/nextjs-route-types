@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 import type { Configuration, WebpackPluginInstance } from "webpack";
 
+import { getTree } from "./generator";
+
 type WebpackConfigContext = Parameters<NonNullable<NextConfig["webpack"]>>[1];
 
 class NextJSRouteTypesPlugin implements WebpackPluginInstance {
@@ -9,7 +11,8 @@ class NextJSRouteTypesPlugin implements WebpackPluginInstance {
 
   apply() {
     if (this.context.isServer) return;
-    console.log(`Running for ${this.context.dev ? "dev" : "prod"} mode`);
+    const tree = getTree();
+    console.log(JSON.stringify(tree, null, 2));
   }
 }
 
