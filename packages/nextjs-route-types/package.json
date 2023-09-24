@@ -1,0 +1,21 @@
+{
+  "name": "nextjs-route-types",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "next dev",
+    "lint": "eslint --ext .ts,.tsx ."
+  },
+  "dependencies": {
+    "webpack": "5.88.2"
+  },
+  "devDependencies": {
+    "@types/node": "20.6.4",
+    "eslint": "8.50.0",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "5.2.2"
+  }
+}
