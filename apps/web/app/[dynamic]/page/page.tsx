@@ -1,3 +1,6 @@
+import type { PagePath } from "./$types";
+
 export default function Page() {
-  return <div className="text-red-500">Hello world</div>;
+  const path: PagePath = "[dynamic]/page";
+  return <div className="text-red-500">{path}</div>;
 }

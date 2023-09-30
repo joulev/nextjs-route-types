@@ -5,7 +5,7 @@ import type { DirectoryTree } from "./types";
 import { removeCwdFromPath } from "./utils";
 
 const FOLDER_NAME = ".next-types";
-const FILE_NAME = "$types.txt";
+const FILE_NAME = "$types.ts";
 const root = path.join(process.cwd(), FOLDER_NAME);
 
 async function generateFilesRecursive(
