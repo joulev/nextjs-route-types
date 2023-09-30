@@ -1,27 +1,28 @@
-const OPTIONAL_CATCH_ALL = "optionalCatchAll";
-const CATCH_ALL = "catchAll";
-const DYNAMIC = "dynamic";
-type PathSegmentType = typeof OPTIONAL_CATCH_ALL | typeof CATCH_ALL | typeof DYNAMIC;
+enum PathSegmentType {
+  OptionalCatchAll = "OptionalCatchAll",
+  CatchAll = "CatchAll",
+  Dynamic = "Dynamic",
+}
 
 function getDynamicParamsFromPath(path: string[]): [PathSegmentType, string][] {
   return path
     .filter(segment => segment.startsWith("[") && segment.endsWith("]"))
     .map(segment => segment.slice(1, -1))
     .map(segment => {
-      // If [...slug], return slug
-      if (segment.startsWith("[...")) return [OPTIONAL_CATCH_ALL, segment.slice(4, -1)];
-      if (segment.startsWith("...")) return [CATCH_ALL, segment.slice(3)];
-      return [DYNAMIC, segment];
+      if (segment.startsWith("[..."))
+        return [PathSegmentType.OptionalCatchAll, segment.slice(4, -1)];
+      if (segment.startsWith("...")) return [PathSegmentType.CatchAll, segment.slice(3)];
+      return [PathSegmentType.Dynamic, segment];
     });
 }
 
 function getTsTypeFromPathSegmentType(type: PathSegmentType) {
   switch (type) {
-    case OPTIONAL_CATCH_ALL:
+    case PathSegmentType.OptionalCatchAll:
       return "string[] | undefined";
-    case CATCH_ALL:
+    case PathSegmentType.CatchAll:
       return "string[]";
-    case DYNAMIC:
+    case PathSegmentType.Dynamic:
       return "string";
   }
 }
