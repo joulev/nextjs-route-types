@@ -85,10 +85,10 @@ importers:
   packages/nextjs-route-types:
     dependencies:
       chokidar:
-        specifier: 3.5.3
+        specifier: ^3.5.3
         version: 3.5.3
       webpack:
-        specifier: 5.88.2
+        specifier: ^5.88.2
         version: 5.88.2(esbuild@0.18.20)
     devDependencies:
       '@types/node':

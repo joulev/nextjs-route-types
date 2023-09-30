@@ -14,8 +14,8 @@
     "lint": "eslint --ext .ts,.tsx ."
   },
   "dependencies": {
-    "chokidar": "3.5.3",
-    "webpack": "5.88.2"
+    "chokidar": "^3.5.3",
+    "webpack": "^5.88.2"
   },
   "devDependencies": {
     "@types/node": "20.6.4",
