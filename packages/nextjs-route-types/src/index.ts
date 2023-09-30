@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 import type { Configuration, WebpackPluginInstance } from "webpack";
 
-import { getTree } from "./generator";
+import { generateFiles } from "./generate-files";
+import { getDirectoryTree } from "./get-directory-tree";
+import { getFileContent } from "./get-file-content";
 
 type WebpackConfigContext = Parameters<NonNullable<NextConfig["webpack"]>>[1];
 
@@ -11,8 +13,8 @@ class NextJSRouteTypesPlugin implements WebpackPluginInstance {
 
   apply() {
     if (this.context.isServer) return;
-    const tree = getTree();
-    console.log(JSON.stringify(tree, null, 2));
+    const tree = getDirectoryTree();
+    generateFiles(tree, getFileContent);
   }
 }
 
