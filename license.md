@@ -1,0 +1,1 @@
+packages/nextjs-route-types/license.md

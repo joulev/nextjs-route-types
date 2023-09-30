@@ -1,6 +1,10 @@
 {
   "name": "nextjs-route-types",
-  "private": true,
+  "version": "0.0.0",
+  "description": "Automatic type generation for Next.js app router routes",
+  "bugs": "https://github.com/joulev/nextjs-route-types/issues",
+  "repository": "joulev/nextjs-route-types",
+  "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -17,5 +21,8 @@
     "next": "13.5.2",
     "tsconfig": "workspace:*",
     "typescript": "5.2.2"
+  },
+  "peerDependencies": {
+    "next": "^13.4.0"
   }
 }

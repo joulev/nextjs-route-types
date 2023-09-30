@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-route-types",
+  "name": "project",
   "private": true,
   "scripts": {
     "build": "turbo run build",

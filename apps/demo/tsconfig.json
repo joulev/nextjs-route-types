@@ -2,7 +2,7 @@
   "extends": "tsconfig/nextjs.json",
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
-    "paths": { "~/*": ["./src/*"] },
+    "paths": { "~/*": ["./*"] },
     "rootDirs": ["app", ".next-types/app"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
