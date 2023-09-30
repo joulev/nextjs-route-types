@@ -29,18 +29,16 @@ class NextJSRouteTypesPlugin implements WebpackPluginInstance {
   }
 }
 
-export function withNextJSRouteTypes(): (nextConfig: NextConfig) => NextConfig {
-  return nextConfig => {
-    return {
-      ...nextConfig,
-      webpack: (config: Configuration, context) => {
-        config.plugins ??= [];
-        config.plugins.push(new NextJSRouteTypesPlugin(context));
+export function withNextJSRouteTypes(nextConfig: NextConfig): NextConfig {
+  return {
+    ...nextConfig,
+    webpack: (config: Configuration, context) => {
+      config.plugins ??= [];
+      config.plugins.push(new NextJSRouteTypesPlugin(context));
 
-        // invoke any existing webpack extensions
-        if (nextConfig.webpack) return nextConfig.webpack(config, context) as unknown;
-        return config;
-      },
-    };
+      // invoke any existing webpack extensions
+      if (nextConfig.webpack) return nextConfig.webpack(config, context) as unknown;
+      return config;
+    },
   };
 }
