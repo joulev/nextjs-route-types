@@ -2,14 +2,14 @@ import fs from "node:fs";
 import path from "node:path";
 
 import type { DirectoryTree } from "./types";
+import { removeCwdFromPath } from "./utils";
 
 const FOLDER_NAME = ".next-types";
 const FILE_NAME = "$types.txt";
 const root = path.join(process.cwd(), FOLDER_NAME);
-// TODO: Handle src/app as well
-const rootAppDir = path.join(root, "app");
 
 function generateFilesRecursive(
+  rootAppDir: string,
   tree: DirectoryTree,
   pathSoFar: string[],
   getFileContent: (dirNames: string[]) => string,
@@ -19,12 +19,16 @@ function generateFilesRecursive(
     const fullPath = path.join(rootAppDir, ...newPath);
     fs.mkdirSync(fullPath, { recursive: true });
     fs.writeFileSync(path.join(fullPath, FILE_NAME), getFileContent(newPath));
-    generateFilesRecursive(item.children, newPath, getFileContent);
+    generateFilesRecursive(rootAppDir, item.children, newPath, getFileContent);
   }
 }
 
-export function generateFiles(tree: DirectoryTree, getFileContent: (dirNames: string[]) => string) {
-  fs.mkdirSync(root, { recursive: true });
+export function generateFiles(
+  appDir: string,
+  tree: DirectoryTree,
+  getFileContent: (dirNames: string[]) => string,
+) {
+  const rootAppDir = path.join(root, removeCwdFromPath(appDir));
   fs.mkdirSync(rootAppDir, { recursive: true });
-  generateFilesRecursive(tree, [], getFileContent);
+  generateFilesRecursive(rootAppDir, tree, [], getFileContent);
 }

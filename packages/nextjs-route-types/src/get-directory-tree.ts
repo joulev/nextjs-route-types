@@ -3,11 +3,6 @@ import path from "node:path";
 
 import type { DirectoryTree, DirectoryTreeItem } from "./types";
 
-function getAppDirectory() {
-  // TODO: Handle `src/app` as well
-  return path.join(process.cwd(), "app");
-}
-
 function getDirectoryTreeRecursive(dir: string): DirectoryTree {
   return fs
     .readdirSync(dir)
@@ -20,6 +15,6 @@ function getDirectoryTreeRecursive(dir: string): DirectoryTree {
     .filter((item): item is DirectoryTreeItem => Boolean(item));
 }
 
-export function getDirectoryTree() {
-  return getDirectoryTreeRecursive(getAppDirectory());
+export function getDirectoryTree(appDir: string) {
+  return getDirectoryTreeRecursive(appDir);
 }
