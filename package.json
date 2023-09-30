@@ -1,11 +1,13 @@
 {
   "name": "project",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "format": "prettier --write .",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "publish-packages": "turbo run build lint && pnpm publish --access public --recursive"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.2.0",
