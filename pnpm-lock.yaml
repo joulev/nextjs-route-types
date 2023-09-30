@@ -30,7 +30,7 @@ importers:
         specifier: 1.10.14
         version: 1.10.14
 
-  apps/web:
+  apps/demo:
     dependencies:
       next:
         specifier: 13.5.2
