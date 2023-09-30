@@ -34,19 +34,35 @@ export function getFileContent(path: string[]) {
     .join(";\n")
     .trim();
   return `
-import React from "react";
+import type { NextRequest } from "next/server";
+import type { ReactNode } from "react";
+
+type EmptyObject = Record<string, never>;
 
 export type SearchParams = Record<string, string | string[] | undefined>;
-export type Params = {
-  ${tsInterfaceContent};
+export type Params = ${params.length ? `{\n  ${tsInterfaceContent};\n}` : "EmptyObject"};
+
+export type DefaultProps = any; // Need help: I have never used default.tsx and its documentation is still WIP
+export type ErrorProps = {
+  error: Error & { digest?: string };
+  reset: () => void;
 };
+export type LayoutProps = {
+  children: ReactNode;
+  params: Params;
+};
+export type LoadingProps = EmptyObject;
+export type NotFoundProps = EmptyObject;
 export type PageProps = {
   params: Params;
   searchParams: SearchParams;
 };
-export type LayoutProps = {
-  children: React.ReactNode;
-  pageProps: PageProps;
+export type TemplateProps = LayoutProps;
+
+export type RouteHandlerContext = {
+  params: Params;
 };
+type HandlerReturn = Response | Promise<Response>;
+export type RouteHandler = (request: NextRequest, context: RouteHandlerContext) => HandlerReturn;
 `.trimStart();
 }
