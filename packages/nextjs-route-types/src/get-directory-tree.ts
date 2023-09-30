@@ -1,18 +1,20 @@
-import fs from "node:fs";
+import fs from "node:fs/promises";
 import path from "node:path";
 
 import type { DirectoryTree, DirectoryTreeItem } from "./types";
 
-function getDirectoryTreeRecursive(dir: string): DirectoryTree {
-  return fs
-    .readdirSync(dir)
-    .map(item => {
-      const fullPath = path.join(dir, item);
-      const stat = fs.statSync(fullPath);
-      if (!stat.isDirectory()) return null;
-      return { name: item, children: getDirectoryTreeRecursive(fullPath) };
-    })
-    .filter((item): item is DirectoryTreeItem => Boolean(item));
+async function getDirectoryTreeRecursive(dir: string): Promise<DirectoryTree> {
+  const directory = await fs.readdir(dir, { withFileTypes: true });
+  const tree = await Promise.all(
+    directory.map(async item => {
+      if (!item.isDirectory()) return null;
+      return {
+        name: item.name,
+        children: await getDirectoryTreeRecursive(path.join(dir, item.name)),
+      };
+    }),
+  );
+  return tree.filter((item): item is DirectoryTreeItem => Boolean(item));
 }
 
 export function getDirectoryTree(appDir: string) {

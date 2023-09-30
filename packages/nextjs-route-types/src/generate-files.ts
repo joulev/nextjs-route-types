@@ -1,4 +1,4 @@
-import fs from "node:fs";
+import fs from "node:fs/promises";
 import path from "node:path";
 
 import type { DirectoryTree } from "./types";
@@ -8,27 +8,29 @@ const FOLDER_NAME = ".next-types";
 const FILE_NAME = "$types.txt";
 const root = path.join(process.cwd(), FOLDER_NAME);
 
-function generateFilesRecursive(
+async function generateFilesRecursive(
   rootAppDir: string,
   tree: DirectoryTree,
   pathSoFar: string[],
   getFileContent: (dirNames: string[]) => string,
 ) {
-  for (const item of tree) {
-    const newPath = [...pathSoFar, item.name];
-    const fullPath = path.join(rootAppDir, ...newPath);
-    fs.mkdirSync(fullPath, { recursive: true });
-    fs.writeFileSync(path.join(fullPath, FILE_NAME), getFileContent(newPath));
-    generateFilesRecursive(rootAppDir, item.children, newPath, getFileContent);
-  }
+  await Promise.all(
+    tree.map(async item => {
+      const newPath = [...pathSoFar, item.name];
+      const fullPath = path.join(rootAppDir, ...newPath);
+      await fs.mkdir(fullPath, { recursive: true });
+      await fs.writeFile(path.join(fullPath, FILE_NAME), getFileContent(newPath));
+      await generateFilesRecursive(rootAppDir, item.children, newPath, getFileContent);
+    }),
+  );
 }
 
-export function generateFiles(
+export async function generateFiles(
   appDir: string,
   tree: DirectoryTree,
   getFileContent: (dirNames: string[]) => string,
 ) {
   const rootAppDir = path.join(root, removeCwdFromPath(appDir));
-  fs.mkdirSync(rootAppDir, { recursive: true });
-  generateFilesRecursive(rootAppDir, tree, [], getFileContent);
+  await fs.mkdir(root, { recursive: true });
+  await generateFilesRecursive(rootAppDir, tree, [], getFileContent);
 }

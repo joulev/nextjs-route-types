@@ -1,13 +1,22 @@
-import fs from "node:fs";
+import fs from "node:fs/promises";
 import path from "node:path";
 
 import { NextJSRouteTypesError } from "./error";
 
-export function getAppDirectory() {
+async function directoryExists(dir: string) {
+  try {
+    const stat = await fs.lstat(dir);
+    return stat.isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+export async function getAppDirectory() {
   let appDir = path.join(process.cwd(), "app");
-  if (fs.existsSync(appDir) && fs.lstatSync(appDir).isDirectory()) return appDir;
+  if (await directoryExists(appDir)) return appDir;
   appDir = path.join(process.cwd(), "src", "app");
-  if (fs.existsSync(appDir) && fs.lstatSync(appDir).isDirectory()) return appDir;
+  if (await directoryExists(appDir)) return appDir;
   throw new NextJSRouteTypesError("Could not find app directory");
 }
 

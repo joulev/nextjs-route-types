@@ -13,12 +13,12 @@ class NextJSRouteTypesPlugin implements WebpackPluginInstance {
   name = "NextJSRouteTypesPlugin";
   constructor(private readonly context: WebpackConfigContext) {}
 
-  apply() {
+  async apply() {
     if (this.context.isServer) return;
     try {
-      const appDir = getAppDirectory();
-      const tree = getDirectoryTree(appDir);
-      generateFiles(appDir, tree, getFileContent);
+      const appDir = await getAppDirectory();
+      const tree = await getDirectoryTree(appDir);
+      await generateFiles(appDir, tree, getFileContent);
     } catch (e) {
       if (e instanceof NextJSRouteTypesError) {
         console.error(e.message);
