@@ -1,6 +1,6 @@
 {
   "name": "nextjs-route-types",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Automatic type generation for Next.js app router routes",
   "bugs": "https://github.com/joulev/nextjs-route-types/issues",
   "repository": "joulev/nextjs-route-types",
