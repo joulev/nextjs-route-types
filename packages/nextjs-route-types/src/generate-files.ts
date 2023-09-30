@@ -31,6 +31,7 @@ export async function generateFiles(
   getFileContent: (dirNames: string[]) => string,
 ) {
   const rootAppDir = path.join(root, removeCwdFromPath(appDir));
-  await fs.mkdir(root, { recursive: true });
+  await fs.mkdir(rootAppDir, { recursive: true });
+  await fs.writeFile(path.join(rootAppDir, FILE_NAME), getFileContent([]));
   await generateFilesRecursive(rootAppDir, tree, [], getFileContent);
 }
