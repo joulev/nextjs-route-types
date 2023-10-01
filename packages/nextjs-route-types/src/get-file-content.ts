@@ -30,7 +30,7 @@ function getTsTypeFromPathSegmentType(type: PathSegmentType) {
 export function getFileContent(path: string[]) {
   const params = getDynamicParamsFromPath(path);
   const tsInterfaceContent = params
-    .map(([type, name]) => `  ${name}: ${getTsTypeFromPathSegmentType(type)}`)
+    .map(([type, name]) => `  "${name}": ${getTsTypeFromPathSegmentType(type)}`)
     .join(";\n")
     .trim();
   return `
