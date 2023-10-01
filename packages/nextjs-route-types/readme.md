@@ -2,7 +2,7 @@
 
 Automatic type generation for Next.js app router routes, ~~copied from~~ highly inspired by [SvelteKit](https://kit.svelte.dev).
 
-<img width="681" alt="image" src="https://github.com/joulev/nextjs-route-types/assets/44609036/5519dcbf-1480-4244-8c58-752d2f9743f4">
+<img width="681" alt="Screenshot of nextjs-route-types in action" src="https://github.com/joulev/nextjs-route-types/assets/44609036/ba31630e-cc7c-46c5-a48a-a1c26780e426">
 
 ## Installation
 
