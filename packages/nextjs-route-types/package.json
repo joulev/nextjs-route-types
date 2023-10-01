@@ -17,8 +17,7 @@
     "lint": "eslint --ext .ts,.tsx ."
   },
   "dependencies": {
-    "chokidar": "^3.5.3",
-    "webpack": "^5.88.2"
+    "chokidar": "^3.5.3"
   },
   "devDependencies": {
     "@types/node": "20.6.4",
@@ -27,7 +26,8 @@
     "next": "13.5.2",
     "tsconfig": "workspace:*",
     "tsup": "7.2.0",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "webpack": "5.88.2"
   },
   "peerDependencies": {
     "next": "^13.4.0"
