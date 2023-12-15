@@ -1,3 +1,5 @@
+import type { DirectoryTree, GetFileContent } from "./types";
+
 enum PathSegmentType {
   OptionalCatchAll = "OptionalCatchAll",
   CatchAll = "CatchAll",
@@ -27,10 +29,24 @@ function getTsTypeFromPathSegmentType(type: PathSegmentType) {
   }
 }
 
-export function getFileContent(path: string[]) {
+function getParallelRoutesFromChildren(children: DirectoryTree) {
+  const parallelRoutes = children
+    .filter(child => child.name.startsWith("@"))
+    .map(child => child.name.slice(1));
+  if (!parallelRoutes.includes("children")) parallelRoutes.push("children");
+  return parallelRoutes;
+}
+
+export const getFileContent: GetFileContent = (path, children) => {
   const params = getDynamicParamsFromPath(path);
-  const tsInterfaceContent = params
+  const paramsTsInterfaceContent = params
     .map(([type, name]) => `  "${name}": ${getTsTypeFromPathSegmentType(type)}`)
+    .join(";\n")
+    .trim();
+  const parallelRoutes = getParallelRoutesFromChildren(children);
+  const layoutPropsTsInterfaceContent = parallelRoutes
+    .map(route => `  "${route}": ReactNode`)
+    .concat("  params: Params")
     .join(";\n")
     .trim();
   return `
@@ -40,17 +56,14 @@ import type { ReactNode } from "react";
 type EmptyObject = Record<string, never>;
 
 export type SearchParams = Record<string, string | string[] | undefined>;
-export type Params = ${params.length ? `{\n  ${tsInterfaceContent};\n}` : "EmptyObject"};
+export type Params = ${params.length ? `{\n  ${paramsTsInterfaceContent};\n}` : "EmptyObject"};
 
 export type DefaultProps = any; // Need help: I have never used default.tsx and its documentation is still WIP
 export type ErrorProps = {
   error: Error & { digest?: string };
   reset: () => void;
 };
-export type LayoutProps = {
-  children: ReactNode;
-  params: Params;
-};
+export type LayoutProps = {\n  ${layoutPropsTsInterfaceContent};\n};
 export type LoadingProps = EmptyObject;
 export type NotFoundProps = EmptyObject;
 export type PageProps = {
@@ -65,4 +78,4 @@ export type RouteHandlerContext = {
 type HandlerReturn = Response | Promise<Response>;
 export type RouteHandler = (request: NextRequest, context: RouteHandlerContext) => HandlerReturn;
 `.trimStart();
-}
+};
