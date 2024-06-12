@@ -58,7 +58,9 @@ type EmptyObject = Record<string, never>;
 export type SearchParams = Record<string, string | string[] | undefined>;
 export type Params = ${params.length ? `{\n  ${paramsTsInterfaceContent};\n}` : "EmptyObject"};
 
-export type DefaultProps = EmptyObject;
+export type DefaultProps = {
+  params: Params;
+};
 export type ErrorProps = {
   error: Error & { digest?: string };
   reset: () => void;
