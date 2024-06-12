@@ -10,13 +10,13 @@
     "publish-packages": "turbo run build lint && pnpm publish --access public --recursive"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "4.2.1",
-    "eslint": "8.52.0",
-    "prettier": "3.0.3",
-    "prettier-plugin-packagejson": "2.4.6",
-    "prettier-plugin-tailwindcss": "0.5.6",
+    "@trivago/prettier-plugin-sort-imports": "4.3.0",
+    "eslint": "8.57.0",
+    "prettier": "3.3.2",
+    "prettier-plugin-packagejson": "2.5.0",
+    "prettier-plugin-tailwindcss": "0.6.3",
     "tsconfig": "workspace:*",
-    "turbo": "1.10.16"
+    "turbo": "2.0.3"
   },
-  "packageManager": "pnpm@8.6.12"
+  "packageManager": "pnpm@9.1.3"
 }
