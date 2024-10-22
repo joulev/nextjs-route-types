@@ -2,7 +2,9 @@
 
 Automatic type generation for Next.js app router routes, ~~copied from~~ highly inspired by [SvelteKit](https://kit.svelte.dev).
 
-<img width="681" alt="Screenshot of nextjs-route-types in action" src="https://github.com/joulev/nextjs-route-types/assets/44609036/ba31630e-cc7c-46c5-a48a-a1c26780e426">
+<img width="660" alt="Screenshot of nextjs-route-types in action" src="https://github.com/user-attachments/assets/4c4104d3-1c04-45dd-9eb3-256327191b60">
+
+**Version 2 only supports Next.js 15 and after. If you want to continue using Next.js 13 or 14, use version 1.1.1 of this library.**
 
 ## Installation
 
@@ -40,8 +42,8 @@ In any files inside the `app` directory (or `src/app` if you use it), you can im
 // app/[dynamic]/[nested]/page.tsx
 import type { PageProps } from "./$types";
 
-export default function Page({ params }: PageProps) {
-  console.log(params.dynamic); // string
+export default async function Page({ params }: PageProps) {
+  console.log((await params).dynamic); // string
   return <div>Hello world</div>;
 }
 ```
@@ -50,8 +52,8 @@ export default function Page({ params }: PageProps) {
 // app/[dynamic]/[...another]/route.ts
 import type { RouteHandler } from "./$types";
 
-export const GET: RouteHandler = (request, { params }) => {
-  console.log(params.another); // string[];
+export const GET: RouteHandler = async (request, { params }) => {
+  console.log((await params).another); // string[];
   return new Response();
 };
 ```
