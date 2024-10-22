@@ -55,8 +55,8 @@ import type { ReactNode } from "react";
 
 type EmptyObject = Record<string, never>;
 
-export type SearchParams = Record<string, string | string[] | undefined>;
-export type Params = ${params.length ? `{\n  ${paramsTsInterfaceContent};\n}` : "EmptyObject"};
+export type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+export type Params = Promise<${params.length ? `{\n  ${paramsTsInterfaceContent};\n}` : "EmptyObject"}>;
 
 export type DefaultProps = {
   params: Params;
