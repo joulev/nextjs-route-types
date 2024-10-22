@@ -46,7 +46,7 @@ export const getFileContent: GetFileContent = (path, children) => {
   const parallelRoutes = getParallelRoutesFromChildren(children);
   const layoutPropsTsInterfaceContent = parallelRoutes
     .map(route => `  "${route}": ReactNode`)
-    .concat("  params: Params")
+    .concat("  params: Promise<Params>")
     .join(";\n")
     .trim();
   return `
@@ -55,11 +55,11 @@ import type { ReactNode } from "react";
 
 type EmptyObject = Record<string, never>;
 
-export type SearchParams = Promise<Record<string, string | string[] | undefined>>;
-export type Params = Promise<${params.length ? `{\n  ${paramsTsInterfaceContent};\n}` : "EmptyObject"}>;
+export type SearchParams = Record<string, string | string[] | undefined>;
+export type Params = ${params.length ? `{\n  ${paramsTsInterfaceContent};\n}` : "EmptyObject"};
 
 export type DefaultProps = {
-  params: Params;
+  params: Promise<Params>;
 };
 export type ErrorProps = {
   error: Error & { digest?: string };
@@ -69,13 +69,13 @@ export type LayoutProps = {\n  ${layoutPropsTsInterfaceContent};\n};
 export type LoadingProps = EmptyObject;
 export type NotFoundProps = EmptyObject;
 export type PageProps = {
-  params: Params;
-  searchParams: SearchParams;
+  params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
 };
 export type TemplateProps = LayoutProps;
 
 export type RouteHandlerContext = {
-  params: Params;
+  params: Promise<Params>;
 };
 type HandlerReturn = Response | Promise<Response>;
 export type RouteHandler = (request: NextRequest, context: RouteHandlerContext) => HandlerReturn;
